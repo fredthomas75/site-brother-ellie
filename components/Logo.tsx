@@ -1,23 +1,29 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 
 export function Logo({
   className,
   variant = "ink",
+  locale = "fr",
+  ariaLabel,
 }: {
   className?: string;
   variant?: "ink" | "cream";
+  locale?: Locale;
+  ariaLabel?: string;
 }) {
   const stroke = variant === "ink" ? "var(--moss-700)" : "var(--cream)";
   const fill = variant === "ink" ? "var(--ink)" : "var(--cream-soft)";
   return (
-    <a
-      href="/"
+    <Link
+      href={`/${locale}`}
       className={cn(
         "inline-flex items-center gap-2.5 font-display text-[1.25rem] leading-none tracking-tight",
         className,
       )}
       style={{ color: fill }}
-      aria-label="Brother Ellie — accueil"
+      aria-label={ariaLabel ?? "Brother Ellie"}
     >
       <svg
         width="28"
@@ -37,6 +43,6 @@ export function Logo({
       <span>
         Brother <span className="italic" style={{ fontWeight: 500 }}>Ellie</span>
       </span>
-    </a>
+    </Link>
   );
 }

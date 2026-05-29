@@ -1,8 +1,9 @@
 import { Container } from "@/components/Container";
 import { ArrowRight, Mail, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/utils";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-export function CtaBand() {
+export function CtaBand({ t }: { t: Dictionary["cta"] }) {
   return (
     <section
       id="devis"
@@ -15,7 +16,6 @@ export function CtaBand() {
           data-animate
           className="relative rounded-3xl bg-moss-700 text-cream-soft p-10 md:p-16 overflow-hidden"
         >
-          {/* glow */}
           <div
             className="absolute inset-0 pointer-events-none opacity-40"
             style={{
@@ -28,16 +28,15 @@ export function CtaBand() {
 
           <div className="relative">
             <h2 className="font-display text-[clamp(2rem,4.5vw,3.4rem)] leading-[1.02] text-cream max-w-2xl">
-              Un dossier à monter? Parlons-en cette semaine.
+              {t.h2}
             </h2>
             <p className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-cream-soft/85">
-              Décrivez-nous le site, l'échéance et le contexte réglementaire.
-              Vous recevez un devis ferme — gratuit, sans engagement — sous 24 h ouvrables.
+              {t.p}
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <a
-                href={`mailto:${siteConfig.email}?subject=Demande%20de%20devis`}
+                href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(t.h2)}`}
                 className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-cream-soft text-moss-900 px-6 py-3.5 text-[15px] font-medium hover:bg-cream transition-colors"
               >
                 <Mail className="w-4 h-4" strokeWidth={1.8} aria-hidden />
@@ -53,9 +52,7 @@ export function CtaBand() {
               </a>
             </div>
 
-            <p className="mt-8 text-[13px] text-cream-soft/55">
-              Devis gratuit · Réponse 24 h ouvrables · Service partout au Québec
-            </p>
+            <p className="mt-8 text-[13px] text-cream-soft/55">{t.microcopy}</p>
           </div>
         </div>
       </Container>

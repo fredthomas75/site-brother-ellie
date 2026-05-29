@@ -1,45 +1,42 @@
 import { Container } from "./Container";
 import { Logo } from "./Logo";
 import { siteConfig } from "@/lib/utils";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 
-const cols: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "Services",
-    links: [
-      { label: "Caractérisation Phase I", href: "#services" },
-      { label: "Caractérisation Phase II", href: "#services" },
-      { label: "Études d'impact", href: "#services" },
-      { label: "Demandes MELCCFP", href: "#services" },
-    ],
-  },
-  {
-    title: "À propos",
-    links: [
-      { label: "Démarche", href: "#demarche" },
-      { label: "Engagements", href: "#engagements" },
-      { label: "FAQ", href: "#faq" },
-    ],
-  },
-  {
-    title: "Contact",
+export function Footer({
+  t,
+  locale,
+}: {
+  t: Dictionary["footer"];
+  locale: Locale;
+}) {
+  const contactCol = {
+    title: locale === "fr" ? "Contact" : "Contact",
     links: [
       { label: siteConfig.email, href: `mailto:${siteConfig.email}` },
-      { label: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/\s/g, "")}` },
-      { label: "Demander un devis", href: "#devis" },
+      {
+        label: siteConfig.phone,
+        href: `tel:${siteConfig.phone.replace(/\s/g, "")}`,
+      },
+      {
+        label: locale === "fr" ? "Demander un devis" : "Request a quote",
+        href: "#devis",
+      },
     ],
-  },
-];
+  };
 
-export function Footer() {
+  const cols = [...t.columns, contactCol];
+
   return (
     <footer className="relative mt-32 bg-moss-900 text-cream-soft/85 bg-grain">
       <div className="absolute inset-0 bg-topo opacity-30 pointer-events-none" />
       <Container className="relative py-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Logo variant="cream" />
+            <Logo variant="cream" locale={locale} />
             <p className="mt-5 text-sm leading-relaxed max-w-xs text-cream-soft/65">
-              Études environnementales pour municipalités, MRC et organismes publics. Bureau au Québec, terrain partout dans la province.
+              {t.blurb}
             </p>
           </div>
           {cols.map((col) => (
@@ -65,11 +62,11 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-moss-700/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-cream-soft/55">
           <p>
-            © {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.
+            © {new Date().getFullYear()} {siteConfig.name}. {t.copyright}
           </p>
           <p>
-            Membre de l'Ordre des ingénieurs · Membre de l'Association des biologistes du Québec.
-            <span className="ml-2 text-clay-soft">(à remplacer)</span>
+            {t.credits}
+            <span className="ml-2 text-clay-soft">{t.creditsTodo}</span>
           </p>
         </div>
       </Container>

@@ -1,11 +1,29 @@
 import { ImageResponse } from "next/og";
+import { isLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
-export const runtime = "edge";
-export const alt = "Brother Ellie — Études environnementales partout au Québec";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const alt = "Brother Ellie — Études environnementales partout au Québec";
 
-export default async function OpenGraphImage() {
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const raw = params.locale;
+  const locale: Locale = isLocale(raw) ? (raw as Locale) : "fr";
+  const t = getDictionary(locale);
+
+  // localized strings
+  const tagline =
+    locale === "fr"
+      ? "Caractérisation de sites · Études d'impact · Demandes MELCCFP — partout au Québec"
+      : "Site characterization · Impact assessments · MELCCFP filings — across Québec";
+
+  const footerRight =
+    locale === "fr" ? "Devis · 24 h ouvrables" : "Quote · 24 business hours";
+
   return new ImageResponse(
     (
       <div
@@ -24,7 +42,6 @@ export default async function OpenGraphImage() {
           position: "relative",
         }}
       >
-        {/* topographic lines */}
         <svg
           width="1200"
           height="630"
@@ -42,24 +59,38 @@ export default async function OpenGraphImage() {
           </g>
         </svg>
 
-        {/* top — brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <svg width="48" height="48" viewBox="0 0 32 32">
-            <circle cx="16" cy="16" r="14.5" stroke="#9dab7e" strokeWidth="1" fill="none" />
-            <path d="M16 4 C 10 9, 9 17, 16 28 C 23 17, 22 9, 16 4 Z" fill="#9dab7e" />
-          </svg>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <svg width="48" height="48" viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="14.5" stroke="#9dab7e" strokeWidth="1" fill="none" />
+              <path d="M16 4 C 10 9, 9 17, 16 28 C 23 17, 22 9, 16 4 Z" fill="#9dab7e" />
+            </svg>
+            <div
+              style={{
+                fontSize: 30,
+                letterSpacing: "-0.02em",
+                color: "#eef1e6",
+              }}
+            >
+              Brother <span style={{ fontStyle: "italic" }}>Ellie</span>
+            </div>
+          </div>
           <div
             style={{
-              fontSize: 30,
-              letterSpacing: "-0.02em",
-              color: "#eef1e6",
+              fontSize: 18,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(195,205,168,0.85)",
+              fontFamily: "Helvetica, Arial, sans-serif",
+              border: "1px solid rgba(195,205,168,0.4)",
+              borderRadius: 999,
+              padding: "8px 18px",
             }}
           >
-            Brother <span style={{ fontStyle: "italic" }}>Ellie</span>
+            {locale.toUpperCase()} · CA
           </div>
         </div>
 
-        {/* center — headline */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
@@ -68,12 +99,15 @@ export default async function OpenGraphImage() {
               letterSpacing: "-0.03em",
               color: "#faf6ec",
               maxWidth: 980,
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            Études environnementales
-            <br />
+            <span>
+              {locale === "fr" ? "Études environnementales" : "Rigorous environmental"}
+            </span>
             <span style={{ fontStyle: "italic", color: "#c3cda8" }}>
-              rigoureuses.
+              {locale === "fr" ? "rigoureuses." : "studies."}
             </span>
           </div>
           <div
@@ -82,15 +116,14 @@ export default async function OpenGraphImage() {
               fontSize: 26,
               color: "rgba(250,246,236,0.7)",
               fontFamily: "Helvetica, Arial, sans-serif",
-              maxWidth: 900,
+              maxWidth: 1000,
               lineHeight: 1.4,
             }}
           >
-            Caractérisation de sites · Études d'impact · Demandes MELCCFP — partout au Québec
+            {tagline}
           </div>
         </div>
 
-        {/* bottom */}
         <div
           style={{
             display: "flex",
@@ -102,8 +135,8 @@ export default async function OpenGraphImage() {
             letterSpacing: "0.05em",
           }}
         >
-          <div>brother-ellie.ca</div>
-          <div>Devis · 24 h ouvrables</div>
+          <div>brother-ellie.ca/{locale}</div>
+          <div>{footerRight}</div>
         </div>
       </div>
     ),

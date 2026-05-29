@@ -1,35 +1,31 @@
 import { Container } from "@/components/Container";
 import { ArrowRight, MapPin } from "lucide-react";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-export function Hero() {
+export function Hero({ t }: { t: Dictionary["hero"] }) {
   return (
     <section className="relative overflow-hidden bg-paper bg-grain">
-      {/* topographic backdrop */}
       <div className="absolute inset-0 bg-topo opacity-70 pointer-events-none" aria-hidden />
-      {/* moss glow */}
       <div className="absolute inset-x-0 top-0 h-[600px] glow-moss pointer-events-none" aria-hidden />
 
       <Container className="relative pt-24 pb-28 md:pt-32 md:pb-36">
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-14 items-center">
-          {/* Left — copy */}
           <div data-animate>
             <div className="inline-flex items-center gap-2 rounded-full bg-moss-50 border border-moss-100 px-3 py-1 text-[12px] text-moss-700">
               <MapPin className="w-3.5 h-3.5" aria-hidden />
-              Service partout au Québec — Côte-Nord, Gaspésie, Abitibi inclus
+              {t.badge}
             </div>
 
             <h1 className="mt-7 font-display text-[clamp(2.6rem,5.6vw,4.5rem)] leading-[0.98] text-ink">
-              Études
+              {t.h1.line1}
               <br />
-              environnementales
+              {t.h1.line2}
               <br />
-              <span className="italic text-moss-700">rigoureuses.</span>
+              <span className="italic text-moss-700">{t.h1.italic}</span>
             </h1>
 
             <p className="mt-7 max-w-xl text-[17px] leading-[1.65] text-ink-soft">
-              Caractérisation de sites, études d'impact, demandes d'autorisation MELCCFP.
-              Pour municipalités et organismes publics qui veulent un dossier solide —
-              et zéro mauvaise surprise au ministère.
+              {t.p}
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3">
@@ -37,25 +33,22 @@ export function Hero() {
                 href="#devis"
                 className="group inline-flex items-center gap-2 rounded-full bg-moss-700 px-6 py-3.5 text-[15px] font-medium text-cream-soft hover:bg-moss-800 transition-colors"
               >
-                Demander un devis
+                {t.ctaPrimary}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </a>
               <a
                 href="#services"
                 className="inline-flex items-center gap-2 rounded-full border border-moss-200 bg-cream-soft/60 px-6 py-3.5 text-[15px] font-medium text-ink hover:border-moss-400 transition-colors"
               >
-                Voir les services
+                {t.ctaSecondary}
               </a>
             </div>
 
-            <p className="mt-6 text-[13px] text-ink-muted">
-              Réponse sous 24 heures ouvrables · Devis gratuit
-            </p>
+            <p className="mt-6 text-[13px] text-ink-muted">{t.microcopy}</p>
           </div>
 
-          {/* Right — visual card */}
           <div data-animate style={{ "--delay": "120ms" } as React.CSSProperties}>
-            <HeroVisual />
+            <HeroVisual t={t.visual} />
           </div>
         </div>
       </Container>
@@ -63,10 +56,9 @@ export function Hero() {
   );
 }
 
-function HeroVisual() {
+function HeroVisual({ t }: { t: Dictionary["hero"]["visual"] }) {
   return (
     <div className="relative">
-      {/* Card with topographic illustration */}
       <div className="relative aspect-[5/6] rounded-2xl overflow-hidden bg-moss-900 shadow-2xl shadow-moss-900/20">
         <svg viewBox="0 0 400 480" className="absolute inset-0 w-full h-full" aria-hidden>
           <defs>
@@ -86,7 +78,6 @@ function HeroVisual() {
           <rect width="400" height="480" fill="url(#sky)" />
           <rect width="400" height="480" fill="url(#dots)" />
 
-          {/* topographic curves */}
           <g fill="none" stroke="#5a6a47" strokeOpacity="0.45" strokeWidth="1">
             <path d="M-20 380 Q 80 340 200 360 T 420 350" />
             <path d="M-20 400 Q 80 360 200 380 T 420 370" />
@@ -96,7 +87,6 @@ function HeroVisual() {
             <path d="M-20 340 Q 80 300 200 320 T 420 310" />
           </g>
 
-          {/* ridges */}
           <path
             d="M0 320 L 80 240 L 140 280 L 200 200 L 260 250 L 320 180 L 400 240 L 400 480 L 0 480 Z"
             fill="url(#ridge)"
@@ -112,11 +102,9 @@ function HeroVisual() {
             fill="#1f2a16"
           />
 
-          {/* sun / moon */}
           <circle cx="290" cy="120" r="42" fill="#d8c89e" opacity="0.92" />
           <circle cx="290" cy="120" r="42" fill="#fbf8f0" opacity="0.4" />
 
-          {/* tiny silhouettes — pine trees */}
           <g fill="#0d1409">
             <path d="M70 410 L 75 395 L 80 410 Z" />
             <path d="M100 405 L 106 387 L 112 405 Z" />
@@ -125,37 +113,35 @@ function HeroVisual() {
           </g>
         </svg>
 
-        {/* overlay label */}
         <div className="absolute left-5 right-5 bottom-5 flex items-end justify-between text-cream-soft">
           <div>
             <div className="text-[11px] uppercase tracking-[0.18em] text-moss-200/70">
-              Dossier MELCCFP
+              {t.dossierLabel}
             </div>
-            <div className="font-display text-xl mt-1">№ 2026-0142</div>
+            <div className="font-display text-xl mt-1">{t.dossierNumber}</div>
           </div>
           <div className="text-right">
             <div className="text-[11px] uppercase tracking-[0.18em] text-moss-200/70">
-              Statut
+              {t.statusLabel}
             </div>
             <div className="mt-1 inline-flex items-center gap-1.5 text-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-moss-300" />
-              Conforme
+              {t.statusValue}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Floating tag */}
       <div className="absolute -bottom-4 -left-4 hidden sm:flex items-center gap-3 bg-cream-soft border border-moss-100 rounded-xl px-4 py-3 shadow-xl shadow-moss-900/10">
         <div className="w-9 h-9 rounded-full bg-moss-700 text-cream-soft flex items-center justify-center font-display text-lg">
           24h
         </div>
         <div>
           <div className="text-[11px] uppercase tracking-wider text-ink-muted">
-            Première réponse
+            {t.badgeTitle}
           </div>
           <div className="text-[13px] text-ink font-medium leading-tight">
-            Sous 24 heures ouvrables
+            {t.badgeSub}
           </div>
         </div>
       </div>
