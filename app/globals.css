@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------
+   Forest & Moss palette — Brother Ellie
+   Inspired by Boreal Quebec: moss, lichen, weathered stone, cream
+---------------------------------------------------------------- */
+
+:root {
+  --cream: #f4efe2;
+  --cream-soft: #faf6ec;
+  --paper: #fbf8f0;
+  --ink: #14241c;
+  --ink-soft: #2a3a32;
+  --ink-muted: #5c6b62;
+
+  --moss-50: #eef1e6;
+  --moss-100: #dde3cc;
+  --moss-200: #c3cda8;
+  --moss-300: #9dab7e;
+  --moss-400: #768560;
+  --moss-500: #5a6a47;
+  --moss-600: #44532f;
+  --moss-700: #2f3d20;
+  --moss-800: #1f2a16;
+  --moss-900: #131c0e;
+
+  --clay: #b9764a;
+  --clay-soft: #d99e6e;
+  --sand: #d8c89e;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --accent: var(--moss-700);
+  --accent-foreground: var(--cream-soft);
+
+  --radius: 4px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cream: var(--cream);
+  --color-cream-soft: var(--cream-soft);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-moss-50: var(--moss-50);
+  --color-moss-100: var(--moss-100);
+  --color-moss-200: var(--moss-200);
+  --color-moss-300: var(--moss-300);
+  --color-moss-400: var(--moss-400);
+  --color-moss-500: var(--moss-500);
+  --color-moss-600: var(--moss-600);
+  --color-moss-700: var(--moss-700);
+  --color-moss-800: var(--moss-800);
+  --color-moss-900: var(--moss-900);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-sand: var(--sand);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----------------------------------------------------------------
+   Recurring visual motif
+---------------------------------------------------------------- */
+
+.bg-topo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%232f3d20' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M0 300 Q150 220 300 300 T600 300'/%3E%3Cpath d='M0 340 Q150 260 300 340 T600 340'/%3E%3Cpath d='M0 380 Q150 300 300 380 T600 380'/%3E%3Cpath d='M0 420 Q150 340 300 420 T600 420'/%3E%3Cpath d='M0 260 Q150 180 300 260 T600 260'/%3E%3Cpath d='M0 220 Q150 140 300 220 T600 220'/%3E%3Cpath d='M0 180 Q150 100 300 180 T600 180'/%3E%3Cpath d='M0 140 Q150 60 300 140 T600 140'/%3E%3Cpath d='M0 460 Q150 380 300 460 T600 460'/%3E%3Cpath d='M0 500 Q150 420 300 500 T600 500'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 600px 600px;
+}
+
+.bg-grain {
+  position: relative;
+}
+.bg-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.13 0 0 0 0 0.09 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.glow-moss {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    color-mix(in oklab, var(--moss-300) 40%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-feature-settings: "ss01", "ss02";
+  letter-spacing: -0.02em;
+}
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 700ms ease;
+  transition-delay: var(--delay, 0ms);
+}
+[data-animate].in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+:where(a, button, summary, [role="button"]):focus-visible {
+  outline: 2px solid var(--moss-600);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-chevron {
+  transform: rotate(45deg);
+}
+
+::selection {
+  background: var(--moss-200);
+  color: var(--moss-900);
+}
